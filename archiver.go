@@ -13,6 +13,7 @@ import (
 // ref. https://golang.org/doc/effective_go.html#interface-names
 type Archiver interface {
 	Archive(src, dest string) error
+	DestFmt() string
 }
 
 type zipper struct{}
@@ -61,4 +62,8 @@ func (*zipper) Archive(src, dest string) error {
 		io.Copy(f, in)
 		return nil
 	})
+}
+
+func (*zipper) DestFmt() string {
+	return "%d.zip"
 }

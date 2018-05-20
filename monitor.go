@@ -38,7 +38,7 @@ func (m *Monitor) Now() (int, error) {
 
 func (m *Monitor) act(path string) error {
 	dirname := filepath.Base(path)
-	filename := fmt.Sprintf("%d.zip", time.Now().UnixNano())
+	filename := fmt.Sprintf(m.Archiver.DestFmt(), time.Now().UnixNano())
 
 	return m.Archiver.Archive(
 		path,
