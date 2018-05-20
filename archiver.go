@@ -2,6 +2,7 @@ package backup
 
 import (
 	"archive/zip"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -13,7 +14,7 @@ import (
 // ref. https://golang.org/doc/effective_go.html#interface-names
 type Archiver interface {
 	Archive(src, dest string) error
-	DestFmt() string
+	DestFmt() func(int64) string
 }
 
 type zipper struct{}
@@ -64,6 +65,9 @@ func (*zipper) Archive(src, dest string) error {
 	})
 }
 
-func (*zipper) DestFmt() string {
-	return "%d.zip"
+func (*zipper) DestFmt() func(int64) string {
+	return func(i int64) string {
+		// %d: base 10
+		return fmt.Sprintf("%d.zip", i)
+	}
 }
