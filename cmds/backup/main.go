@@ -5,6 +5,7 @@ import (
 	"flag"
 	"github.com/matryer/filedb"
 	"log"
+	"strings"
 )
 
 type path struct {
@@ -24,7 +25,8 @@ func main() {
 	dbpath := flag.String("db", "./backupdata", "データベースのディレクトリへのパス")
 
 	flag.Parse()
-	if len(flag.Args()) < 1 { // NOTE: `Args` returns the non-flag arguments.
+	args := flag.Args()
+	if len(args) < 1 { // NOTE: `Args` returns the non-flag arguments.
 		fatalErr = errors.New("エラー; コマンドを指定してください")
 		return
 	}
@@ -41,5 +43,11 @@ func main() {
 	if err != nil {
 		fatalErr = err
 		return
+	}
+
+	switch strings.ToLower(args[0]) {
+	case "list":
+	case "add":
+	case "remove":
 	}
 }
