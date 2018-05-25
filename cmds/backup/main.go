@@ -83,5 +83,24 @@ func main() {
 		}
 
 	case "remove":
+		var path path
+
+		col.RemoveEach(func(i int, data []byte) (remove bool, stop bool) {
+			err := json.Unmarshal(data, &path)
+			if err != nil {
+				fatalErr = err
+				return false, true
+			}
+
+			for _, p := range args[1:] {
+				if p == path.Path {
+					fmt.Printf("- %s\n", path)
+					return true, false
+				}
+			}
+
+			return false, false
+		})
+
 	}
 }
