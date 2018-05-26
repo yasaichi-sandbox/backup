@@ -24,7 +24,7 @@ func main() {
 	defer func() {
 		if fatalErr != nil {
 			flag.PrintDefaults()
-			log.Fatal(fatalErr)
+			log.Fatalln(fatalErr)
 		}
 	}()
 
@@ -45,7 +45,6 @@ func main() {
 	defer db.Close()
 
 	col, err := db.C("paths")
-	_ = col
 	if err != nil {
 		fatalErr = err
 		return
