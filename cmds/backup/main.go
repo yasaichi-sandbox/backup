@@ -54,7 +54,7 @@ func main() {
 	case "list":
 		var path path
 
-		col.ForEach(func(i int, data []byte) bool {
+		col.ForEach(func(i int, data []byte) (stop bool) {
 			err := json.Unmarshal(data, &path)
 			if err != nil {
 				fatalErr = err
@@ -62,7 +62,7 @@ func main() {
 			}
 
 			fmt.Printf("= %s\n", path)
-			return false
+			return
 		})
 	case "add":
 		if len(args[1:]) == 0 {
@@ -98,8 +98,7 @@ func main() {
 				}
 			}
 
-			return false, false
+			return
 		})
-
 	}
 }
