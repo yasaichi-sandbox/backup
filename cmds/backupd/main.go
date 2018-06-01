@@ -27,7 +27,7 @@ func main() {
 		}
 	}()
 
-	interval := flag.Int("interval", 10, "チェックの間隔（秒単位）")
+	interval := flag.Duration("interval", 10*time.Second, "チェックの間隔")
 	archive := flag.String("archive", "archive", "アーカイブの保存先")
 	dbpath := flag.String("db", "./db", "filedbデータベースへのパス")
 	flag.Parse()
@@ -76,7 +76,7 @@ func main() {
 Loop:
 	for {
 		select {
-		case <-time.After(time.Duration(*interval) * time.Second):
+		case <-time.After(*interval):
 			check(m, col)
 		case <-signalChan:
 			fmt.Println()
